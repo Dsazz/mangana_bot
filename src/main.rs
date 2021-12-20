@@ -1,4 +1,5 @@
 #![deny(clippy::all, clippy::pedantic, clippy::cognitive_complexity)]
+#![allow(clippy::non_ascii_literal)]
 #![warn(unused_extern_crates)]
 
 use std::io::Write;

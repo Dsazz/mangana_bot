@@ -54,5 +54,5 @@ pub async fn favorite_topic_selection(
 
     requester.delete_message(chat_id, message_id).await.ok();
     let markup = chat_process_preloader(&requester, chat_id, preloader_process).await.unwrap();
-    reply_markup(&requester, chat_id, "Please select manga to subscribe:", markup).await.unwrap();
+    reply_markup(&requester, chat_id, "Выберите мангу для подписки на обновления:", markup).await.unwrap();
 }

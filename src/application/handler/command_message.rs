@@ -40,7 +40,7 @@ impl CommandMessage {
         let chat_id = self.cx.update.chat.id;
 
         if !get_config().is_user_admin(self.cx.update.chat.id) {
-            return send_escaped_message(requester, chat_id, "You do not have administrator rights!").await;
+            return send_escaped_message(requester, chat_id, "У Вас нет административных прав!").await;
         }
 
         let command_arg = self.cx.update.text().unwrap().replace("/admin ", "");
@@ -55,7 +55,7 @@ impl CommandMessage {
             ]
         ]);
 
-        reply_markup(requester, chat_id, "Please confirm send notification", markup).await
+        reply_markup(requester, chat_id, "Подтвердите отправку уведомления", markup).await
     }
 
     async fn start(&self) -> Result<()> {
@@ -64,7 +64,7 @@ impl CommandMessage {
         ]);
 
         reply_markup(&self.cx.requester, self.cx.update.chat.id,
-        "Hi there! Welcome to Manger parser! Please subscribe to be on top of the latest updates",
+        "Приветы! Добро пожаловать на Manger! Подпишись,чтобы быть в курсе последних обновлений твоей избранной манги!",
             markup
         ).await
     }
@@ -75,7 +75,7 @@ impl CommandMessage {
         ]);
 
         reply_markup(&self.cx.requester, self.cx.update.chat.id,
-            "Please click the button to start the subscription process:",
+            "Пожалуйста, нажми эту кнопку, чтобы начать процесс подписки на мангу",
             markup
         ).await
     }
@@ -87,12 +87,12 @@ impl CommandMessage {
 
         let subscriber = FindSubscriber::new(chat_id).execute();
         match subscriber {
-            None => send_escaped_message(requester, chat_id, "You are not unsubscribed!").await,
+            None => send_escaped_message(requester, chat_id, "Вы еще не подписаны!").await,
 
             Some(subscriber) => {
                 info!("  * removing subscriber: {}", subscriber.chat_id);
                 DeleteSubscriber::new(subscriber).execute();
-                send_escaped_message(requester, chat_id, "You have been unsubscribed!").await
+                send_escaped_message(requester, chat_id, "Вы отписались от всех уведомлений!").await
             }
         }
     }

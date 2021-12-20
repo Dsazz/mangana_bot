@@ -9,6 +9,6 @@ pub async fn cancel_app_notification(requester: &AutoSend<Bot>, callback_data: C
     let message_id = callback_data.message_id();
 
     DeleteAppNotification::new(notification_id).execute();
-    show_alert(&requester, callback_id, "Notification has been canceled").await.unwrap();
+    show_alert(&requester, callback_id, "Уведомление было отменено").await.unwrap();
     requester.delete_message(chat_id, message_id).await.ok();
 }

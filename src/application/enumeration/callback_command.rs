@@ -38,12 +38,12 @@ impl CallbackCommand {
 
     pub fn get_name(&self) -> &'static str {
         match self {
-            CallbackCommand::SendAppNotification(_) => "Send",
-            CallbackCommand::CancelAppNotification(_) => "Cancel",
-            CallbackCommand::Subscribe => "Subscribe",
-            CallbackCommand::FavoriteSiteSelection => "Select a favorite site",
-            CallbackCommand::FavoriteTopicSelection(_) => "Select favorite topics",
-            CallbackCommand::FinishFavoriteSelection => "Complete",
+            CallbackCommand::SendAppNotification(_) => "Отправить",
+            CallbackCommand::CancelAppNotification(_) => "Отмена",
+            CallbackCommand::Subscribe => "Подписаться",
+            CallbackCommand::FavoriteSiteSelection => "Выбрать сайт",
+            CallbackCommand::FavoriteTopicSelection(_) => "Выбрать мангу",
+            CallbackCommand::FinishFavoriteSelection => "Завершить",
             CallbackCommand::Unknown => "",
         }
     }

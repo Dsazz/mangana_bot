@@ -1,6 +1,6 @@
 [package]
 name = "onepunchman_parcer_bot"
-version = "2.1.0"
+version = "2.2.0"
 authors = ["ts-stanislav.stepane <ts-stanislav.stepane@rakuten.com>"]
 edition = "2018"
 

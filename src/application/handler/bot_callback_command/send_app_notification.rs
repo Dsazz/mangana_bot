@@ -18,14 +18,14 @@ async fn preloader_process(requester: &AutoSend<Bot>, callback_data: CallbackDat
 
     match FindAppNotification::new(notification_id).execute() {
         None => {
-            show_alert(&requester, callback_id, &format!("Not found app notification: {}", notification_id)).await.ok();
+            show_alert(&requester, callback_id, &format!("Уведомление c ID {} не найдено", notification_id)).await.ok();
             Ok(())
         }
         Some(data) => {
             requester.delete_message(chat_id, message_id).await.ok();
             NotifySubscribers::new(data.text).execute().await.ok();
 
-            show_alert(&requester, callback_id, "All subscribers have been notified").await.ok();
+            show_alert(&requester, callback_id, "Все подписчики были уведомлены").await.ok();
             Ok(())
         },
     }
