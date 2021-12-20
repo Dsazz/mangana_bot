@@ -1,0 +1,1 @@
+ALTER TABLE parse_histories ADD PRIMARY KEY (topic_id);

@@ -1,0 +1,1 @@
+ALTER TABLE parse_histories DROP CONSTRAINT unique_idx_parse_histories;

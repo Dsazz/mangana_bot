@@ -1,0 +1,39 @@
+[package]
+name = "onepunchman_parcer_bot"
+version = "2.1.0"
+authors = ["ts-stanislav.stepane <ts-stanislav.stepane@rakuten.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+dotenv = "0.15.0"
+dotenv_codegen = "0.15.0"
+log = "0.4.14"
+env_logger="0.9.0"
+async-trait = "0.1.51"
+anyhow = "1.0.44"
+
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+regex = "1.5.4"
+base64 = "0.13.0"
+strum = "0.23"
+strum_macros = "0.23"
+chrono = "0.4"
+
+diesel = { version = "1.4.7", features = ["postgres", "chrono", "r2d2"] }
+diesel_migrations = "1.4.0"
+r2d2 = "0.8.9"
+#waiter_di = "1.6.5"
+
+teloxide = { version = "0.5.2", features = ["auto-send", "macros"] }
+derive_more = "0.99.16"
+scraper = "0.12.0"
+futures = "0.3.0"
+reqwest = { version = "0.11.4", features = ["json"] }
+lazy_static = "1.4.0"
+
+tokio = { version =  "1.8", features = ["rt-multi-thread", "macros"] }
+tokio-stream = "0.1.7"

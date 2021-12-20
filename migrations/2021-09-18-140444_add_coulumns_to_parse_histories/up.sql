@@ -1,0 +1,3 @@
+ALTER TABLE parse_histories
+ADD COLUMN chapter_name VARCHAR(100),
+ADD COLUMN url VARCHAR(100);

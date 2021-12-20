@@ -1,0 +1,1 @@
+ALTER TABLE subscribers DROP CONSTRAINT id_subscribers CASCADE;

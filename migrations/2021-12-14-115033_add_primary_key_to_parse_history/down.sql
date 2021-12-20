@@ -1,0 +1,1 @@
+ALTER TABLE parse_histories DROP CONSTRAINT parse_histories_pkey;

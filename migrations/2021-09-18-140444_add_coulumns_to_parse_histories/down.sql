@@ -1,0 +1,3 @@
+ALTER TABLE parse_histories
+DROP COLUMN IF EXISTS chapter_name,
+DROP COLUMN IF EXISTS url;

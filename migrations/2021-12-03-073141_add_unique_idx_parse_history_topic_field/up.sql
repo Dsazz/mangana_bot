@@ -1,0 +1,1 @@
+ALTER TABLE parse_histories ADD CONSTRAINT unique_idx_parse_histories UNIQUE (topic_id);
