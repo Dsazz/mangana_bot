@@ -2,23 +2,23 @@ use scraper::{Html};
 use async_trait::async_trait;
 use crate::application::parser::contract::Parser;
 use crate::application::parser::extractor::contract::Extractor;
-use crate::application::parser::extractor::mangapoisk::MangapoiskExtractor;
+use crate::application::parser::extractor::mangalib::MangalibExtractor;
 use crate::domain::enumeration::site::Site;
 
 #[derive(Debug)]
-pub struct Mangapoisk {}
+pub struct Mangalib {}
 
-impl Mangapoisk {
-    pub(crate) fn new() -> Mangapoisk {
-        Mangapoisk{}
+impl Mangalib {
+    pub(crate) fn new() -> Mangalib {
+        Mangalib{}
     }
 }
 
 #[async_trait]
-impl Parser for Mangapoisk {
-    fn site(&self) -> Site { Site::Mangapoisk }
+impl Parser for Mangalib {
+    fn site(&self) -> Site { Site::Mangalib }
     fn extractor(&self, html: Html) -> Box<dyn Extractor> {
-        Box::new(MangapoiskExtractor::new(html))
+        Box::new(MangalibExtractor::new(html))
     }
 }
 

@@ -32,7 +32,7 @@ impl Raw {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct ParseHistory {
     pub topic: Topic,
     pub last_chapter_title: String,
@@ -65,6 +65,7 @@ impl ParseHistory {
         let mut result = "".to_owned();
 
         result.push_str(&format!("\u{1f441}\u{fe0f}\u{200d}\u{fe0f} {}\n", escape(&self.topic.name)));
+        result.push_str(&format!("    {}\n", escape(&self.topic.site().unwrap().name().to_string())));
         result.push_str(&format!("    \u{1f4d6} {}", link(
             &self.url, &italic(&self.last_chapter_title),
         )));
@@ -79,6 +80,7 @@ impl ParseHistory {
     pub fn to_log(&self) -> String {
         let mut data = "|> Parse History: \n".to_owned();
         data.push_str(&format!("  topic_id   | {}\n", &self.topic.id));
+        data.push_str(&format!("  site       | {}\n", &self.topic.site().unwrap().name().to_string()));
         data.push_str(&format!("  topic_name | {}\n", &self.topic.name));
         data.push_str(&format!("  title      | {}\n", &self.last_chapter_title));
         data.push_str(&format!("  name       | {}\n", &self.chapter_name));

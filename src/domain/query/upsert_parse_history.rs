@@ -27,6 +27,5 @@ impl<'a> UpsertParseHistory {
             .set(&self.entity)
             .execute(&self.connection)
             .expect("Error upserting a parse history");
-
     }
 }

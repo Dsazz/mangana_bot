@@ -19,13 +19,13 @@ pub async fn subscribe(requester: &AutoSend<Bot>, callback_data: CallbackData<'_
         None => {
             AddSubscriber::new(Subscriber { chat_id }).execute();
             requester.delete_message(chat_id, message_id).await.ok();
-            send_escaped_message(&requester, chat_id, "Вы успешно подписались на обновления!").await.unwrap();
+            send_escaped_message(requester, chat_id, "Вы успешно подписались на обновления!").await.unwrap();
 
             let markup = InlineKeyboardMarkup::new(sites_to_inline_keyboards(chat_id));
-            reply_markup(&requester, chat_id, "Выберите сайт для поиска манги:", markup).await.unwrap();
+            reply_markup(requester, chat_id, "Выберите сайт для поиска манги:", markup).await.unwrap();
         },
         Some(_) => {
-            send_escaped_message(&requester, chat_id, "Вы уже подписаны!").await.unwrap();
+            send_escaped_message(requester, chat_id, "Вы уже подписаны!").await.unwrap();
             requester.delete_message(chat_id, message_id).await.ok();
         }
     }

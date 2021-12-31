@@ -19,9 +19,9 @@ pub async fn finish_favorite_selection(requester: &AutoSend<Bot>, callback_data:
         Ok(answer)
     };
 
-    let message = chat_process_preloader(&requester, chat_id, preloader_process)
+    let message = chat_process_preloader(requester, chat_id, preloader_process)
         .await.unwrap();
 
     requester.delete_message(chat_id, message_id).await.ok();
-    send_message(&requester, chat_id, &message).await.unwrap();
+    send_message(requester, chat_id, &message).await.unwrap();
 }
