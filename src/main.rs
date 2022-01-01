@@ -28,7 +28,7 @@ extern crate anyhow;
 use crate::application::task::start_bot::StartBot;
 use crate::application::task::parse_job::job;
 
-static PARSE_INTERVAL: u64 = 14_000_u64;//each 4 hours
+static PARSE_INTERVAL: u64 = 3600_u64;//each hour
 static APP_VERSION: &str = env!("CARGO_PKG_VERSION");
 
 #[tokio::main]

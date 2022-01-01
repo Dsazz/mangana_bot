@@ -6,22 +6,33 @@ import {getBrowserViewport, getRandomReferer} from "./helper/browser.js";
 import {validatePageContent} from "./helper/page-validator.js";
 puppeteer.use(StealthPlugin());
 
+import ProxyList from 'free-proxy';
+const proxyList = new ProxyList();
+
 
 const EMPTY_CONTENT = "";
-const MAX_CONNECTION_ATTEMPTS = 5;
-const PAGE_WAIT_TIMEOUT = 5000;//ms
+const MAX_CONNECTION_ATTEMPTS = 10;
+const PAGE_WAIT_TIMEOUT = 6000;//ms
 export async function extract(url) {
     // console.log("[extractor] start initializing virtual browser")
     let browser = null;
     let page = null;
     try {
+        const proxy = await proxyList.randomByProtocol('http');
+
         browser = await puppeteer.launch({
             headless: true,
+            ignoreHTTPSErrors: true,
             // executablePath: process.env.CHROMIUM_PATH,
-             executablePath: '/usr/bin/chromium-browser',
-            args: ['--no-sandbox'],
-
+            executablePath: '/usr/bin/chromium-browser',
+            args: [
+                '--lang=ru-RU',
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                `--proxy-server=${proxy}`,
+            ],
         });
+
         page = await browser.newPage();
 
         const viewport = getBrowserViewport();
