@@ -10,3 +10,7 @@ services:
       - .env
     volumes:
       - .:/app
+    dns:
+      - 8.8.8.8
+      - 4.4.4.4
+    network_mode: host
