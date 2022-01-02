@@ -6,9 +6,6 @@ import {getBrowserViewport, getRandomReferer} from "./helper/browser.js";
 import {validatePageContent} from "./helper/page-validator.js";
 puppeteer.use(StealthPlugin());
 
-import ProxyList from 'free-proxy';
-const proxyList = new ProxyList();
-
 
 const EMPTY_CONTENT = "";
 const MAX_CONNECTION_ATTEMPTS = 10;
@@ -18,22 +15,30 @@ export async function extract(url) {
     let browser = null;
     let page = null;
     try {
-        const proxy = await proxyList.randomByProtocol('http');
-
         browser = await puppeteer.launch({
             headless: true,
             ignoreHTTPSErrors: true,
-            // executablePath: process.env.CHROMIUM_PATH,
-            executablePath: '/usr/bin/chromium-browser',
+            executablePath: process.env.CHROMIUM_PATH,
             args: [
-                '--lang=ru-RU',
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
-                `--proxy-server=${proxy}`,
+                '--disable-accelerated-2d-canvas',
+                '--no-first-run',
+                '--ignore-certificate-errors',
+                '--ignore-certificate-errors-spki-list',
+                '--disable-infobars',
+                '--lang=en-US,en',
+                '--disable-extensions',
+                `--proxy-server=${process.env.PROXY_URL}`,
             ],
         });
 
         page = await browser.newPage();
+
+        await page.authenticate({
+            username: process.env.PROXY_USER,
+            password: process.env.PROXY_PASS,
+        });
 
         const viewport = getBrowserViewport();
         // console.log(`  |> viewport (height: ${viewport.height}px | width: ${viewport.width}px)`);
@@ -43,6 +48,11 @@ export async function extract(url) {
         await page.setJavaScriptEnabled(true);
         // console.log("  |> browser infinity timeout: enabled")
         await page.setDefaultNavigationTimeout(0);
+
+        await page.setExtraHTTPHeaders({
+            "Accept-Language": "en,en-US;q=0,5",
+            Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,/;q=0.8",
+        });
 
     } catch (err) {
         console.log("request error: ", err);
@@ -95,6 +105,7 @@ export async function extract(url) {
     }
 
     if (browser.isConnected()) {
+        await page.close();
         await browser.close();
         // console.log('  |> browser has been closed');
     }

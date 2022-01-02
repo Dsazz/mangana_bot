@@ -1498,7 +1498,6 @@ dependencies = [
  "env_logger",
  "futures",
  "httpmock",
- "isahc",
  "lazy_static",
  "log",
  "openssl",

@@ -12,7 +12,7 @@ impl SearchForTopicUpdates {
     }
 
     pub async fn execute(&self) -> Result<(), ()> {
-        info!(" |> Run SearchForTopicUpdates");
+        info!("|> Run SearchForTopicUpdates");
         //@todo probably I can use it(<Box<dyn ITopic + Send + Sync>) with dyn ITopic for unit tests
         let available_parsers: Vec<Box<dyn Parser + Send + Sync>> = vec![
             Box::new(Mangapoisk::new()),
