@@ -24,21 +24,10 @@ export async function extract(url) {
                 '--disable-setuid-sandbox',
                 '--disable-accelerated-2d-canvas',
                 '--no-first-run',
-                '--ignore-certificate-errors',
-                '--ignore-certificate-errors-spki-list',
-                '--disable-infobars',
-                '--lang=en-US,en',
-                '--disable-extensions',
-                `--proxy-server=${process.env.PROXY_URL}`,
             ],
         });
 
         page = await browser.newPage();
-
-        await page.authenticate({
-            username: process.env.PROXY_USER,
-            password: process.env.PROXY_PASS,
-        });
 
         const viewport = getBrowserViewport();
         // console.log(`  |> viewport (height: ${viewport.height}px | width: ${viewport.width}px)`);
@@ -105,7 +94,6 @@ export async function extract(url) {
     }
 
     if (browser.isConnected()) {
-        await page.close();
         await browser.close();
         // console.log('  |> browser has been closed');
     }

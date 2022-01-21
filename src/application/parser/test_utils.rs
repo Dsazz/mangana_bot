@@ -7,14 +7,14 @@ pub mod mangapoisk {
     pub const VALID_LAST_CHAPTER_HTML: &str =
         r#"<ul class="chapter-list-container post-footer list-group">
                 <li class="list-group-item chapter-item ">
-                    <a href="/manga/vanpanchmen/chapter/29-199" class="">
+                    <a href="/manga/vanpanchmen/chapter/29-199">
                         <span class="chapter-title">Том 29 Глава 199 </span>
                         Предельная пушка волнового потока адского огня
                     </a>
                     <span class="chapter-date ">13 декабря 2021  </span>
                 </li>
                 <li class="list-group-item chapter-item ">
-                    <a href="/manga/vanpanchmen/chapter/29-198" class="">
+                    <a href="/manga/vanpanchmen/chapter/29-198">
                         <span class="chapter-title">Том 29 Глава 198 </span>
                         Конфискация
                     </a>

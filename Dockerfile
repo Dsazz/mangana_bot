@@ -47,11 +47,5 @@ COPY --from=builder /home/rust/src/js /usr/local/js
 WORKDIR /usr/local/js
 RUN npm install && npm i -g .
 
-#RUN curl -ks 'https://cert.host.server/ssl_certs/EnterpriseRootCA.crt' -o '/usr/local/share/ca-certificates/EnterpriseRootCA.crt'
-COPY ./docker/cert/rootCA.crt /usr/local/share/ca-certificates/rootCA.crt
-RUN update-ca-certificates
-
-RUN update-ca-certificates
-
 WORKDIR /usr/local/bin/
 CMD ["onepunchman_parcer_bot"]

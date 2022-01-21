@@ -37,23 +37,22 @@ mod tests {
         assert_eq!("[EXTRACTOR] can't extract last chapter element", result.unwrap_err().to_string());
     }
 
-    //@todo: need to fix
-    // #[test]
-    // fn extract_last_chapter_elem_valid() {
-    //     let extractor = get_valid_extractor();
-    //     let result = extractor.extract_last_chapter_elem();
-    //     assert!(result.is_ok());
-    //
-    //     let expected_html =
-    //         r#"<li class="list-group-item chapter-item ">
-    //                 <a href="/manga/vanpanchmen/chapter/29-199" class="">
-    //                     <span class="chapter-title">Том 29 Глава 199 </span>
-    //                     Предельная пушка волнового потока адского огня
-    //                 </a>
-    //                 <span class="chapter-date ">13 декабря 2021  </span>
-    //             </li>"#;
-    //     assert_eq!(expected_html, result.unwrap().html());
-    // }
+    #[test]
+    fn extract_last_chapter_elem_valid() {
+        let extractor = get_valid_extractor();
+        let result = extractor.extract_last_chapter_elem();
+        assert!(result.is_ok());
+
+        let expected_html =
+            r#"<li class="list-group-item chapter-item ">
+                    <a href="/manga/vanpanchmen/chapter/29-199">
+                        <span class="chapter-title">Том 29 Глава 199 </span>
+                        Предельная пушка волнового потока адского огня
+                    </a>
+                    <span class="chapter-date ">13 декабря 2021  </span>
+                </li>"#;
+        assert_eq!(expected_html, result.unwrap().html());
+    }
 
     #[test]
     fn extract_chapter_href_valid() {

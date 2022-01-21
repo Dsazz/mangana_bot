@@ -10,7 +10,7 @@ use crate::domain::model::topic::Topic;
 use crate::domain::query::get_all_site_topics::GetAllSiteTopics;
 
 #[async_trait]
-pub trait Parser {
+pub trait Parser: Sync {
     fn site(&self) -> Site;
     fn validate_topic_site(&self, topic: Topic) -> Result<(), Error> {
         let topic_site = match topic.site() {

@@ -31,5 +31,10 @@ make migrate-down
 make migrate-create {name}
 ```
 
+### Unit Tests
+```bash
+make tests
+```
+
 ### Release
-Just run `make release`
+TODO: create GitHub actions
