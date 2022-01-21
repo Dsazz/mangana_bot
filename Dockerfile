@@ -47,5 +47,8 @@ COPY --from=builder /home/rust/src/js /usr/local/js
 WORKDIR /usr/local/js
 RUN npm install && npm i -g .
 
+COPY ./docker/cert/rootCA.cert /usr/local/share/ca-certificates/rootCA.crt
+RUN update-ca-certificates
+
 WORKDIR /usr/local/bin/
 CMD ["onepunchman_parcer_bot"]
