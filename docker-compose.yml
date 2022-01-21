@@ -10,3 +10,19 @@ services:
       - .env
     volumes:
       - .:/app
+    tty: true
+    networks:
+      - mangana
+
+  tor:
+    container_name: tor
+    image: peterdavehello/tor-socks-proxy:latest
+    ports:
+      - "9150:9150"
+    restart: always
+    networks:
+      - mangana
+
+networks:
+  mangana:
+    driver: bridge

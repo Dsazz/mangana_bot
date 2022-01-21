@@ -24,6 +24,12 @@ export async function extract(url) {
                 '--disable-setuid-sandbox',
                 '--disable-accelerated-2d-canvas',
                 '--no-first-run',
+                '--ignore-certificate-errors',
+                '--ignore-certificate-errors-spki-list',
+                '--disable-infobars',
+                '--lang=en-US,en',
+                '--disable-extensions',
+                `--proxy-server=${process.env.PROXY_URL}`,
             ],
         });
 
