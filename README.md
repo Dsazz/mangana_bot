@@ -3,6 +3,7 @@ A **Telegram bot** that will keep you updated with the latest updates to your **
 
 ### Dependencies
 * Rust
+* NodeJS
 * Docker
 * Telegram API (*teloxide*)
 
@@ -30,5 +31,10 @@ make migrate-down
 make migrate-create {name}
 ```
 
+### Unit Tests
+```bash
+make tests
+```
+
 ### Release
-Just run `make release`
+TODO: create GitHub actions

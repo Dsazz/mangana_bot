@@ -12,9 +12,12 @@ use crate::helper::repeat_work;
 mod helper;
 mod domain;
 mod application;
+mod macros;
 
 #[macro_use]
 extern crate lazy_static;
+#[allow(unused_extern_crates)]
+extern crate openssl;
 #[macro_use]
 extern crate diesel;
 #[macro_use]
@@ -25,7 +28,7 @@ extern crate anyhow;
 use crate::application::task::start_bot::StartBot;
 use crate::application::task::parse_job::job;
 
-static PARSE_INTERVAL: u64 = 1800_u64;
+static PARSE_INTERVAL: u64 = 43_200_u64;//each 12 hours
 static APP_VERSION: &str = env!("CARGO_PKG_VERSION");
 
 #[tokio::main]

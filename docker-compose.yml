@@ -1,0 +1,31 @@
+version: '3.4'
+
+services:
+  worker:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    tty: true
+    dns:
+      - 8.8.8.8
+      - 4.4.4.4
+    networks:
+      - mangana
+
+  tor:
+    container_name: tor
+    image: peterdavehello/tor-socks-proxy:latest
+    ports:
+      - "9150:9150"
+    restart: always
+    networks:
+      - mangana
+
+networks:
+  mangana:
+    driver: bridge

@@ -11,3 +11,9 @@ release:
 	heroku container:login
 	heroku container:push worker --app onepunchman-parcer-bot
 	heroku container:release worker --app onepunchman-parcer-bot
+
+tests:
+	cargo test
+
+up:
+	docker-compose up --build --force-recreate

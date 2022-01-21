@@ -6,3 +6,4 @@ mod parser;
 mod wrapper;
 pub(crate) mod dto;
 mod enumeration;
+mod http;

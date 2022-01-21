@@ -1,6 +1,5 @@
 pub mod upsert_parse_history;
 pub mod get_all_subscribers;
-pub mod find_parse_history;
 pub mod find_subscriber;
 pub mod add_subscriber;
 pub mod get_all_updates_by_subscription;

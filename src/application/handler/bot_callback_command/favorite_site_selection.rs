@@ -20,5 +20,5 @@ pub async fn favorite_site_selection(requester: &AutoSend<Bot>, callback_data: C
     let markup = InlineKeyboardMarkup::new(keyboards);
 
     requester.delete_message(chat_id, message_id).await.ok();
-    reply_markup(&requester, chat_id, "Выберите сайт для поиска манги", markup).await.unwrap();
+    reply_markup(requester, chat_id, "Выберите сайт для поиска манги", markup).await.unwrap();
 }
