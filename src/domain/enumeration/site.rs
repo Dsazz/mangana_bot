@@ -1,5 +1,6 @@
 use anyhow::Error;
 use strum_macros::EnumIter;
+use url::Url;
 use crate::domain::model::topic::Topic;
 
 const MANGAPOISK_URL: &str = "https://mangapoisk.ru";
@@ -49,9 +50,10 @@ impl Site {
     }
 
     pub fn url_to_topic(self, topic: &Topic) -> String {
+        let url = Url::parse(self.url()).unwrap();
         match self {
             Site::Mangapoisk | Site::Mangalib => {
-                format!("{}{}", self.url(), self.uri_to_topic(topic))
+                url.join(self.uri_to_topic(topic).as_str()).unwrap().to_string()
             },
         }
     }

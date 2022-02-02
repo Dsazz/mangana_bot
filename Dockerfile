@@ -47,8 +47,12 @@ COPY --from=builder /home/rust/src/js /usr/local/js
 WORKDIR /usr/local/js
 RUN npm install && npm i -g .
 
+#How to generate https://gist.github.com/fntlnz/cf14feb5a46b2eda428e000157447309
 COPY ./docker/cert/rootCA.cert /usr/local/share/ca-certificates/rootCA.crt
 RUN update-ca-certificates
 
 WORKDIR /usr/local/bin/
-CMD ["onepunchman_parcer_bot"]
+
+COPY ./entrypoint.sh /
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]

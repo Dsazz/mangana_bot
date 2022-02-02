@@ -1,6 +1,7 @@
 use anyhow::Error;
 use crate::domain::enumeration::site::Site;
 use diesel::sql_types::{Integer, Text};
+use url::Url;
 use crate::application::dto::extracted_chapter::ExtractedChapter;
 use crate::domain::model::parse_history::ParseHistory;
 
@@ -37,6 +38,7 @@ impl Topic {
         self.site().unwrap().uri_to_topic(&self.clone())
     }
     pub fn url_for(&self, path: &str) -> String {
-        format!("{}{}", self.url(), path)
+        let url = Url::parse(self.url().as_str()).unwrap();
+        url.join(path).unwrap().to_string()
     }
 }

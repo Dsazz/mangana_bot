@@ -8,10 +8,11 @@ puppeteer.use(StealthPlugin());
 
 
 const EMPTY_CONTENT = "";
-const MAX_CONNECTION_ATTEMPTS = 10;
+const MAX_CONNECTION_ATTEMPTS = 5;
 const PAGE_WAIT_TIMEOUT = 6000;//ms
 export async function extract(url) {
-    // console.log("[extractor] start initializing virtual browser")
+    logger.info("[extractor] start initializing virtual browser")
+
     let browser = null;
     let page = null;
     try {
@@ -21,28 +22,24 @@ export async function extract(url) {
             executablePath: process.env.CHROMIUM_PATH,
             args: [
                 '--no-sandbox',
-                '--disable-setuid-sandbox',
-                '--disable-accelerated-2d-canvas',
-                '--no-first-run',
                 '--ignore-certificate-errors',
                 '--ignore-certificate-errors-spki-list',
-                '--disable-infobars',
                 '--lang=en-US,en',
                 '--disable-extensions',
-                `--proxy-server=${process.env.PROXY_URL}`,
+                //`--proxy-server=${process.env.PROXY_URL}`,
             ],
         });
 
         page = await browser.newPage();
 
         const viewport = getBrowserViewport();
-        // console.log(`  |> viewport (height: ${viewport.height}px | width: ${viewport.width}px)`);
         await page.setViewport(viewport);
+        logger.info(`  |> viewport (height: ${viewport.height}px | width: ${viewport.width}px)`);
 
-        // console.log("  |> javascript: enabled")
         await page.setJavaScriptEnabled(true);
-        // console.log("  |> browser infinity timeout: enabled")
+        logger.info("  |> javascript: enabled")
         await page.setDefaultNavigationTimeout(0);
+        logger.info("  |> browser infinity timeout: enabled")
 
         await page.setExtraHTTPHeaders({
             "Accept-Language": "en,en-US;q=0,5",
@@ -50,60 +47,64 @@ export async function extract(url) {
         });
 
     } catch (err) {
-        console.log("request error: ", err);
+        logger.error("request error: ", err);
         return EMPTY_CONTENT;
     }
 
     if (!browser || !page) {
-        console.log("request error: empty page or browser", page, browser);
+        logger.error("request error: empty page or browser", page, browser);
     }
 
     let attempt = 0;
     while (attempt <= MAX_CONNECTION_ATTEMPTS) {
         try {
-            // console.log(`  |> trying to send a request to ${url}`)
+            logger.info(`  |> trying to send a request to ${url}`)
             const userAgent = randomUseragent.getRandom();
-            // console.log("  |> with user agent:", userAgent);
+            logger.info(`  |> with user agent: ${userAgent}`);
             await page.setUserAgent(userAgent);
 
             const referer = await getRandomReferer();
-            // console.log("  |> with referer:", referer);
+            logger.info(`  |> with referer: ${referer}`);
             await page.setExtraHTTPHeaders({referer: referer});
 
             await page.goto(url);
             let isNotFirstAttempt = attempt !== 0;
             if (isNotFirstAttempt) {
-                // console.log(`  |> waiting ${PAGE_WAIT_TIMEOUT} (ms)`);
+                logger.info(`  |> waiting ${PAGE_WAIT_TIMEOUT} (ms)`);
                 await page.waitForTimeout(PAGE_WAIT_TIMEOUT)
+                logger.info(`  |> waiting finished`);
             }
 
+            logger.info(`  |> goto page`);
             const response = await page.goto(url);
             if (!response.ok()) {
+                logger.error(`request error ${url}: invalid status ${response.status()}`);
                 throw new Error(`invalid status ${response.status()}`);
             }
+            logger.info(`  |> page have been reached`);
 
-            // console.log('  |> validate page content...')
+            logger.info('  |> validate page content...')
             const content = await page.content();
             validatePageContent(content);
 
-            // console.log('  |> access has been successfully granted!')
-            await browser.close();
-            // console.log('  |> browser has been closed');
+            logger.info('  |> access has been successfully granted!')
+            await page.close();
+            logger.info('  |> page has been closed');
 
             console.log(content);
             return content;
 
         } catch (err) {
-            console.log('attempt error:', err.message);
+            logger.error(`attempt #${attempt} error: ${err.message}`);
             attempt+=1;
         }
     }
 
-    if (browser.isConnected()) {
-        await browser.close();
-        // console.log('  |> browser has been closed');
+    if (!page.isClosed()) {
+        await page.close();
+        logger.info('  |> page has been closed');
     }
 
-    console.log(`request error: exceeded the limit of requests to the website: ${url}`);
+    logger.error(`request error: exceeded the limit of requests to the website: ${url}`);
     return EMPTY_CONTENT;
 }

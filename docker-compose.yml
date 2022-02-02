@@ -8,6 +8,12 @@ services:
       dockerfile: ./Dockerfile
     env_file:
       - .env
+    depends_on:
+      - manger_db
+      - tor
+    links:
+      - manger_db
+      - tor
     volumes:
       - .:/app
     tty: true
@@ -17,14 +23,31 @@ services:
     networks:
       - mangana
 
+  manger_db:
+    image: postgres:13.5
+    container_name: manger_db
+    env_file:
+     - .env
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - mangana
+
   tor:
     container_name: tor
     image: peterdavehello/tor-socks-proxy:latest
     ports:
       - "9150:9150"
     restart: always
+    volumes:
+      - ./torrc:/etc/tor/torrc
     networks:
       - mangana
+
+volumes:
+  pgdata:
 
 networks:
   mangana:

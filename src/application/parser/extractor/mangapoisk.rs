@@ -1,5 +1,6 @@
 use std::any::Any;
 use anyhow::Error;
+use regex::Regex;
 use scraper::{Html, ElementRef, Selector};
 use crate::application::parser::extractor::contract::Extractor;
 
@@ -36,7 +37,10 @@ impl Extractor for MangapoiskExtractor {
         };
         match link.value().attr("href") {
             None => bail!("[EXTRACTOR] can't extract last chapter href from element: {:?}", link.html()),
-            Some(href) => Ok(href.to_string()),
+            Some(href) => {
+                let re = Regex::new(r"/\w+/\w+/").unwrap();
+                Ok(re.replace_all(href, "").to_string())
+            },
         }
     }
 

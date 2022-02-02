@@ -1,6 +1,6 @@
 [package]
 name = "onepunchman_parcer_bot"
-version = "2.3.1"
+version = "2.3.2"
 authors = ["ts-stanislav.stepane <ts-stanislav.stepane@rakuten.com>"]
 edition = "2018"
 
@@ -23,6 +23,7 @@ base64 = "0.13.0"
 strum = "0.23"
 strum_macros = "0.23"
 chrono = "0.4"
+url = "2.2.2"
 
 openssl = "*"
 diesel = { version = "1.4.7", features = ["postgres", "chrono", "r2d2"] }

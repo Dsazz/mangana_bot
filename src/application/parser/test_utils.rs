@@ -1,6 +1,6 @@
 #[allow(dead_code)]
 pub mod mangapoisk {
-    pub const VALID_LAST_CHAPTER_HREF: &str = "/manga/vanpanchmen/chapter/29-199";
+    pub const VALID_LAST_CHAPTER_HREF: &str = "chapter/29-199";
     pub const VALID_LAST_CHAPTER_TITLE: &str = "Том 29 Глава 199";
     pub const VALID_LAST_CHAPTER_NAME: &str = "Предельная пушка волнового потока адского огня";
     pub const VALID_LAST_CHAPTER_RELEASE_DATE: &str = "13 декабря 2021";
